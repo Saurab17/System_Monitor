@@ -14,7 +14,18 @@ using std::vector;
 
 
 // Todo: Return this process's ID
-int Process::Pid() { 
+Process::Process(int pid):
+    _pid(pid)
+    {
+        _user = User();
+        _ram = Ram();
+        _cpu_util = CpuUtilization();
+        _cmd = Command();
+        _uptime = UpTime();
+    }
+
+    
+int Process::Pid() const { 
     return _pid;
 }
 
@@ -27,34 +38,34 @@ float Process::CpuUtilization() {
     float freq = sysconf(_SC_CLK_TCK);
 
     float seconds = sys_uptime - start_time_jiffies/freq;
-    float result = 100.0 * (start_time_jiffies/freq)/seconds;
-    return result; 
+    _cpu_util = 100.0 * (process_active_jiffies/freq)/seconds;
+    return _cpu_util; 
 }
 
 // Todo: Return the command that generated this process
 string Process::Command() { 
-    string command = LinuxParser::Command(_pid);
-    return command; 
+    return _cmd; 
 }
 
 // Todo: Return this process's memory utilization
 string Process::Ram() { 
-    string ram_usage = LinuxParser::Ram(_pid);
-    return ram_usage; 
+    _ram = LinuxParser::Ram(_pid);
+    return _ram; 
 }
 
 // Todo: Return the user (name) that generated this process
 string Process::User() { 
-    string user = LinuxParser::User(_pid);
-    return user; 
+    return _user; 
 }
 
 // Todo: Return the age of this process (in seconds)
 long int Process::UpTime() { 
-    long uptime = LinuxParser::UpTime(_pid);
-    return 0; 
+    _uptime = LinuxParser::UpTime(_pid);
+    return _uptime; 
 }
 
-// TODO: Overload the "less than" comparison operator for Process objects
+// Todo: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
-bool Process::operator<(Process const& a[[maybe_unused]]) const { return true; }
+bool Process::operator<(Process const& a) const { 
+    return this->_pid < a.Pid(); 
+}

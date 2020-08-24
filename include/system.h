@@ -9,19 +9,26 @@
 
 class System {
  public:
-  Processor& Cpu();                   // TODO: See src/system.cpp
-  std::vector<Process>& Processes();  // TODO: See src/system.cpp
-  float MemoryUtilization();          // TODO: See src/system.cpp
-  long UpTime();                      // TODO: See src/system.cpp
-  int TotalProcesses();               // TODO: See src/system.cpp
-  int RunningProcesses();             // TODO: See src/system.cpp
-  std::string Kernel();               // TODO: See src/system.cpp
-  std::string OperatingSystem();      // TODO: See src/system.cpp
+  System();
+  Processor& Cpu();                   // Todo: See src/system.cpp
+  std::vector<Process>& Processes();  // Todo: See src/system.cpp
+  float MemoryUtilization();          // Todo: See src/system.cpp
+  long UpTime();                      // Todo: See src/system.cpp
+  int TotalProcesses();               // Todo: See src/system.cpp
+  int RunningProcesses();             // Todo: See src/system.cpp
+  std::string Kernel();               // Todo: See src/system.cpp
+  std::string OperatingSystem();      // Todo: See src/system.cpp
 
   // TODO: Define any necessary private members
  private:
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
+  std::string kernel_;
+  std::string os_;
+  float memory_util_;
+  int total_processes_;
+  int running_processes_;
+  long int sys_uptime_;
 };
 
 #endif
