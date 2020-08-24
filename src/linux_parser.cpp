@@ -229,11 +229,12 @@ vector<string> LinuxParser::CpuUtilization() {
         if(line.compare(0, key.size(), key) == 0) {
             std::istringstream buf(line);
             std::istream_iterator<string> beg(buf), end;
-            std::vector<string> values(beg, end);
+            values = std::vector<string>(beg, end);
             break;
         }
     }
     file.close();
+    values.erase(values.begin());
     return values; 
 }
 
