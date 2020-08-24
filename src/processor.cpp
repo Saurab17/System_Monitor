@@ -20,8 +20,8 @@ float Processor::Utilization() {
     for(unsigned int index=0; index<t1.size(); index++) {
         delta_t = stof(t2[index]) - stof(t1[index]);
         delta_total += delta_t;
-        if(index == 3) {
-            delta_idle = delta_t;
+        if(index == 3 || index == 4) {
+            delta_idle += delta_t;
         }
     }
 
