@@ -7,7 +7,7 @@
 
 namespace LinuxParser {
 // Paths
-const std::string kProcDirectory{"/proc/"};
+const std::string kProcDirectory{"/proc"};
 const std::string kCmdlineFilename{"/cmdline"};
 const std::string kCpuinfoFilename{"/cpuinfo"};
 const std::string kStatusFilename{"/status"};
@@ -44,6 +44,7 @@ std::vector<std::string> CpuUtilization();
 long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(int pid);
+long StartTimeJiffy(int pid);
 long IdleJiffies();
 
 // Processes
