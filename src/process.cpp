@@ -17,10 +17,10 @@ using std::vector;
 Process::Process(int pid):
     _pid(pid)
     {
-        _user = User();
+        _user = LinuxParser::User(_pid);
         _ram = Ram();
         _cpu_util = CpuUtilization();
-        _cmd = Command();
+        _cmd = LinuxParser::Command(_pid);
         _uptime = UpTime();
     }
 
