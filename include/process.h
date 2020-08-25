@@ -10,13 +10,13 @@ class Process {
  public:
   Process(int pid);
   int Pid() const;                               // TODO: See src/process.cpp
-  std::string User();                      // TODO: See src/process.cpp
-  std::string Command();                   // TODO: See src/process.cpp
-  float CpuUtilization();                  // TODO: See src/process.cpp
-  std::string Ram();                       // TODO: See src/process.cpp
-  long int UpTime();                       // TODO: See src/process.cpp
+  std::string User() const;                      // TODO: See src/process.cpp
+  std::string Command() const;                   // TODO: See src/process.cpp
+  float CpuUtilization() const;                  // TODO: See src/process.cpp
+  std::string Ram() const;                       // TODO: See src/process.cpp
+  long int UpTime() const;                       // TODO: See src/process.cpp
   bool operator<(Process const& a) const;  // TODO: See src/process.cpp
-  float GetCpUPercent() const;
+  bool operator>(Process const& a) const;
 
   // TODO: Declare any necessary private members
  private:
@@ -26,6 +26,7 @@ class Process {
  float _cpu_util;
  std::string _ram;
  long int _uptime;
+ void CalculateCpuUtil();
 };
 
 #endif

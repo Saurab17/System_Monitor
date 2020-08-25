@@ -3,6 +3,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "process.h"
 #include "processor.h"
@@ -16,7 +17,7 @@ using std::vector;
 
 System::System() {
     cpu_ = Processor();
-    processes_ = Processes();
+    RefreshProcesses();
     kernel_ = LinuxParser::Kernel();
     os_ = LinuxParser::OperatingSystem();
     total_processes_ = TotalProcesses();
@@ -32,12 +33,6 @@ Processor& System::Cpu() {
 
 // Todo: Return a container composed of the system's processes
 vector<Process>& System::Processes() { 
-    vector<int> pids = LinuxParser::Pids();
-    processes_.clear();
-
-    for(int pid : pids) {
-        processes_.push_back(Process(pid));
-    }
     return processes_; 
 }
 
@@ -73,4 +68,15 @@ int System::TotalProcesses() {
 long unsigned System::UpTime() { 
     sys_uptime_ = LinuxParser::UpTime();
     return sys_uptime_; 
+}
+
+void System::RefreshProcesses() {
+    processes_.clear();
+    vector<int> pids = LinuxParser::Pids();
+
+    for(int pid : pids) {
+        processes_.push_back(Process(pid));
+    }
+
+    std::sort(processes_.begin(), processes_.end(), std::greater<Process>());
 }

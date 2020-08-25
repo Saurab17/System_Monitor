@@ -18,10 +18,10 @@ Process::Process(int pid):
     _pid(pid)
     {
         _user = LinuxParser::User(_pid);
-        _ram = Ram();
-        _cpu_util = CpuUtilization();
+        _ram = LinuxParser::Ram(_pid);
+        CalculateCpuUtil();
         _cmd = LinuxParser::Command(_pid);
-        _uptime = UpTime();
+        _uptime = LinuxParser::UpTime(_pid);;
     }
 
     
@@ -30,8 +30,31 @@ int Process::Pid() const {
 }
 
 // Todo: Return this process's CPU utilization
-float Process::CpuUtilization() { 
+float Process::CpuUtilization() const { 
+    return _cpu_util; 
+}
 
+// Todo: Return the command that generated this process
+string Process::Command() const { 
+    return _cmd; 
+}
+
+// Todo: Return this process's memory utilization
+string Process::Ram() const { 
+    return _ram; 
+}
+
+// Todo: Return the user (name) that generated this process
+string Process::User() const { 
+    return _user; 
+}
+
+// Todo: Return the age of this process (in seconds)
+long int Process::UpTime() const { 
+    return _uptime; 
+}
+
+void Process::CalculateCpuUtil() {
     float process_active_jiffies = LinuxParser::ActiveJiffies(_pid);
     float sys_uptime = LinuxParser::UpTime();
     float start_time_jiffies = LinuxParser::StartTimeJiffy(_pid);
@@ -39,37 +62,14 @@ float Process::CpuUtilization() {
 
     float seconds = sys_uptime - start_time_jiffies/freq;
     _cpu_util = 100.0 * (process_active_jiffies/freq)/seconds;
-    return _cpu_util; 
-}
-
-// Todo: Return the command that generated this process
-string Process::Command() { 
-    return _cmd; 
-}
-
-// Todo: Return this process's memory utilization
-string Process::Ram() { 
-    _ram = LinuxParser::Ram(_pid);
-    return _ram; 
-}
-
-// Todo: Return the user (name) that generated this process
-string Process::User() { 
-    return _user; 
-}
-
-// Todo: Return the age of this process (in seconds)
-long int Process::UpTime() { 
-    _uptime = LinuxParser::UpTime(_pid);
-    return _uptime; 
-}
-
-float Process::GetCpUPercent() const {
-    return _cpu_util;
 }
 
 // Todo: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const { 
-    return this->_cpu_util < a.GetCpUPercent(); 
+    return this->_cpu_util < a.CpuUtilization(); 
+}
+
+bool Process::operator>(Process const& a) const { 
+    return this->_cpu_util > a.CpuUtilization(); 
 }
