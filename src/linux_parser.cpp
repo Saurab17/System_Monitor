@@ -33,6 +33,7 @@ string LinuxParser::OperatingSystem() {
       }
     }
   }
+  filestream.close();
   return value;
 }
 
@@ -46,6 +47,7 @@ string LinuxParser::Kernel() {
     std::istringstream linestream(line);
     linestream >> os >> os >> kernel;
   }
+  stream.close();
   return kernel;
 }
 
@@ -88,7 +90,6 @@ float LinuxParser::MemoryUtilization() {
             } else {
                 file.close();
                 throw std::runtime_error("Couldn't read total memory!!");
-                return 0.0;       
             }
         }
 
@@ -114,12 +115,13 @@ float LinuxParser::MemoryUtilization() {
 }
 
 // Todo: Read and return the system uptime
-long LinuxParser::UpTime() { 
+long unsigned LinuxParser::UpTime() { 
     string uptime_file = kProcDirectory + kUptimeFilename;
-    long uptime_seconds;
+    long unsigned uptime_seconds;
 
     std::ifstream file = GetStream(uptime_file);
     file >> uptime_seconds;
+    file.close();
     return uptime_seconds; 
 }
 
@@ -190,7 +192,6 @@ long LinuxParser::ActiveJiffies() {
     }
     file.close();
     return sys_active_jiffies;
-    return 0; 
 }
 
 // Todo: Read and return the number of idle jiffies for the system
@@ -291,6 +292,7 @@ string LinuxParser::Command(int pid) {
     std::ifstream file = GetStream(filepath);
     string line;
     std::getline(file, line);
+    file.close();
     return line; 
 }
 
@@ -309,10 +311,11 @@ string LinuxParser::Ram(int pid) {
             std::istream_iterator<string> beg(buf), end;
             std::vector<string> values(beg, end);
 
-            ram = values[1];
+            ram = std::to_string(std::stof(values[1])/1024).substr(0,6);
             break;
         }
     }
+    file.close();
     return ram;
 }
 
@@ -335,6 +338,7 @@ string LinuxParser::Uid(int pid) {
             break;
         }
     }
+    file.close();
     return uid;
 }
 
@@ -361,11 +365,11 @@ string LinuxParser::User(int pid) {
 
 // Todo: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::UpTime(int pid) { 
+long unsigned LinuxParser::UpTime(int pid) { 
     string filepath = kProcDirectory + "/" + std::to_string(pid) + kStatFilename;
     std::ifstream file = GetStream(filepath);
     
-    long process_uptime_jiffy;
+    long unsigned process_uptime_jiffy;
     string line;
     std::getline(file, line);
 

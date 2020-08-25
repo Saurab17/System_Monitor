@@ -6,7 +6,7 @@
 
 namespace Format {
 
-std::string ElapsedTime(long times);  // Todo: See src/format.cpp
+std::string ElapsedTime(long unsigned seconds);  // Todo: See src/format.cpp
 std::ifstream GetStream(std::string path);
 
 };                                    // namespace Format

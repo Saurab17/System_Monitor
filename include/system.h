@@ -13,7 +13,7 @@ class System {
   Processor& Cpu();                   // Todo: See src/system.cpp
   std::vector<Process>& Processes();  // Todo: See src/system.cpp
   float MemoryUtilization();          // Todo: See src/system.cpp
-  long UpTime();                      // Todo: See src/system.cpp
+  long unsigned UpTime();                      // Todo: See src/system.cpp
   int TotalProcesses();               // Todo: See src/system.cpp
   int RunningProcesses();             // Todo: See src/system.cpp
   std::string Kernel();               // Todo: See src/system.cpp
@@ -28,7 +28,7 @@ class System {
   float memory_util_;
   int total_processes_;
   int running_processes_;
-  long int sys_uptime_;
+  long unsigned sys_uptime_;
 };
 
 #endif

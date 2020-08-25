@@ -64,8 +64,12 @@ long int Process::UpTime() {
     return _uptime; 
 }
 
+float Process::GetCpUPercent() const {
+    return _cpu_util;
+}
+
 // Todo: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const { 
-    return this->_pid < a.Pid(); 
+    return this->_cpu_util < a.GetCpUPercent(); 
 }
