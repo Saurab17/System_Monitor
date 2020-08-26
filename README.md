@@ -1,6 +1,9 @@
 # System-Monitor
+A dynamic real time system and process stats viewer.
 
-Solution code for System Monitor Project in the Object Oriented Programming Course of the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). 
+## Introduction
+`System-Monitor` is developed as part of the Object Oriented Programming Course of the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).  
+The application gives real time system stats much like the popular [htop](https://github.com/hishamhm/htop).
 
 ![System Monitor](images/monitor.png)
 
